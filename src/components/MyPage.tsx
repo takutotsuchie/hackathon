@@ -28,13 +28,14 @@ function MyPage() {
     .then(response=> {return response.json()})
     .then((json)=>setUser(json))},[]);
 
-  //FromUser
-  const [fromUser,setFromUser] = useState<UserMessage[]>([])
-  const FromUserUrl= URL + "/receiveMessage?UserId="+logUserId
+  //受信済みメッセージ,receiveMessageHandler
+  //message,fromUser,pointを返したい
+  const [receiveMessage,setReceiveMessage] = useState<UserMessage[]>([])
+  const ReceiveUserUrl= URL + "/receiveMessage?UserId="+logUserId
   useEffect(() =>{
-  fetch(FromUserUrl)
+  fetch(ReceiveUserUrl)
   .then((response:any)=> {return response.json()})
-  .then((json)=>setFromUser(json))},[]);
+  .then((json)=>setReceiveMessage(json))},[]);
   
   
   const[users,setUsers]=useState<User[]>([])
@@ -44,14 +45,15 @@ function MyPage() {
 },[])
 
 
-  //受信したメッセージ
-  const [toUser,setToUser] = useState<UserMessage[]>([])
-  const ToUserUrl= URL+"/receiveMessage?UserId="+logUserId
+  //送信済みメッセージ,sendMessageHander
+  //message,toUser,pointを返したい
+  const [sendMessage,setSendMessage] = useState<UserMessage[]>([])
+  const SendMessageUrl= URL+"/sendMessage?UserId="+logUserId
   
   useEffect(()=>{
-  fetch(ToUserUrl)
+  fetch(SendMessageUrl)
   .then((response:any)=> {return response.json()})
-  .then((json)=>setToUser(json))}
+  .then((json)=>setSendMessage(json))}
   ,[]);
   
   
@@ -62,24 +64,24 @@ function MyPage() {
       <p> 現在のポイント:{user.UserPoint}</p>
       <h4>受信したメッセージ</h4>
       <ul>
-        {fromUser.map((userMessage)=>(
-          <div key={userMessage.MessageId}>
+        {receiveMessage.map((receiveMessage)=>(
+          <div key={receiveMessage.MessageId}>
           <fieldset>
           <h1></h1>
-          <UserName UserId={userMessage.FromUserId}/>
-          <p>from:{userMessage.Name}</p>
-          <p>ポイント: {userMessage.MessagePoint}</p>
+          <UserName UserId={receiveMessage.FromUserId}/>
+          <p>from:{receiveMessage.Name}</p>
+          <p>ポイント: {receiveMessage.MessagePoint}</p>
           </fieldset>
           </div>
         ))}
       </ul>
       <h4>送信したメッセージ</h4>
-          {toUser.map((userMessage)=> (
-            <div key={userMessage.MessageId}>
+          {sendMessage.map((sendMessage)=> (
+            <div key={sendMessage.MessageId}>
               <fieldset>
-              <p>to:{userMessage.Name}</p>
-              <p>ポイント:{userMessage.MessagePoint}</p>
-              <p>{userMessage.MessageText}</p>
+              <p>to:{sendMessage.Name}</p>
+              <p>ポイント:{sendMessage.MessagePoint}</p>
+              <p>{sendMessage.MessageText}</p>
               </fieldset>
             </div>
           ))
