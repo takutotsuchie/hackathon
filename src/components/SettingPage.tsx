@@ -2,7 +2,7 @@ import { Button, toggleButtonGroupClasses } from '@mui/material'
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import { User, Message } from '../types/type'
+import { User, Message, UserMessage } from '../types/type'
 
 import MessagePage from './MessagePage'
 
@@ -36,31 +36,26 @@ const SettingPage = () => {
 
 
 
-  //toUser
-  const [toUser,setToUser] = useState<Message[]>([])
-  const ToUserUrl= URL+"/myPage?ToUserId="+logUserId
+  //送信済みメッセージの一覧
+  //送信済みメッセージ,sendMessageHander
+  //message,toUser,pointを返したい
+  const [sendMessage,setSendMessage] = useState<UserMessage[]>([])
+  const SendMessageUrl= URL+"/sendMessage?UserId="+logUserId
   
   useEffect(()=>{
-  fetch(ToUserUrl)
+  fetch(SendMessageUrl)
   .then((response:any)=> {return response.json()})
-  .then((json)=>setToUser(json))},[]);
-  
-  toUser.map((m) => {
-    users.map((user) => {
-      if(m.FromUserId === user.UserId){
-        m.FromUserId = user.Name
-      }
-    }
-    )
-  })
-  const handleClick = (e:any) => {
+  .then((json)=>setSendMessage(json))}
+  ,[]);
+  const deleteMessage = (e:any) => {
     console.log(e)
     const messageId = e.target.value
     console.log(messageId);
     console.log(e.target.value)
-    const url:string=URL+"/message?id="+messageId
+    const url:string=URL+"/message?messageId="+messageId
     fetch(url, { method: 'DELETE' });
   }
+  //userはとりあえず削除しない
   const deleteUser = () => {
     const url:string = URL+"/user?id="+logUserId
     console.log(logUserId)
@@ -72,15 +67,14 @@ const SettingPage = () => {
         <>
         <h4>送信したメッセージ</h4>
         <Button onClick={toggleButton}>戻る</Button>
-          {toUser.map((message)=> (
-            <div key={message.MessageId}>
+          {sendMessage.map((sendMessage)=> (
+            <div key={sendMessage.MessageId}>
               <fieldset>
-              <p>to:{message.FromUserId},ポイント:{message.MessagePoint}</p>
-              <p>{message.MessageText}</p>
-              <p>{message.MessageId}</p>
+              <p>to:{sendMessage.Name},ポイント:{sendMessage.MessagePoint}</p>
+              <p>{sendMessage.MessageText}</p>
               <form>
-              <input type="hidden" value={message.MessageId}></input>
-              <Button  onClick={(e) =>handleClick(e)}>削除</Button>
+              <input type="hidden" value={sendMessage.MessageId}></input>
+              <Button  onClick={(e) =>deleteMessage(e)}>削除</Button>
               </form>
               </fieldset>
             </div>
