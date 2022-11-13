@@ -1,10 +1,8 @@
-import { Button, toggleButtonGroupClasses } from '@mui/material'
-import axios from 'axios'
+import { Button,} from '@mui/material'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
-import { User, Message, UserMessage } from '../types/type'
+import { User, UserMessage } from '../types/type'
 
-import MessagePage from './MessagePage'
 
 const SettingPage = () => {
     const URL = "https://hackathon2-ypancna7sq-uc.a.run.app"
@@ -47,11 +45,9 @@ const SettingPage = () => {
   .then((response:any)=> {return response.json()})
   .then((json)=>setSendMessage(json))}
   ,[]);
-  const deleteMessage = (e:any) => {
-    console.log(e)
-    const messageId = e.target.value
+  const deleteMessage = (messageId:any) => {
+    
     console.log(messageId);
-    console.log(e.target.value)
     const url:string=URL+"/message?messageId="+messageId
     fetch(url, { method: 'DELETE' });
   }
@@ -69,14 +65,13 @@ const SettingPage = () => {
         <Button onClick={toggleButton}>戻る</Button>
           {sendMessage.map((sendMessage)=> (
             <div key={sendMessage.MessageId}>
+              <form>
               <fieldset>
               <p>to:{sendMessage.Name},ポイント:{sendMessage.MessagePoint}</p>
               <p>{sendMessage.MessageText}</p>
-              <form>
-              <input type="hidden" value={sendMessage.MessageId}></input>
-              <Button  onClick={(e) =>deleteMessage(e)}>削除</Button>
-              </form>
+              <Button  onClick={() =>deleteMessage(sendMessage.MessageId)}>削除</Button>
               </fieldset>
+              </form>
             </div>
           ))
           }
