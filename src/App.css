@@ -40,7 +40,7 @@
 }
 .menuList li{
   margin-right: 100px;
-  margin-left: auto;
+  margin-left: 30px;
   
   transition: text-decoration 2s;
 }
@@ -104,8 +104,20 @@ a:active{
   margin-top: 10%;
   margin-left: auto;
   margin-right:auto;
+
   text-align: center;
   background-color: #efefef;
   width:60%;
   border-radius: 15px ;
+}
+
+.messageContainer{
+  height:50px;
+}
+.message1{
+  height: 50px;
+}
+
+.message4{
+  height: 50px;
 }

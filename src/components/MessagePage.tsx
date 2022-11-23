@@ -19,10 +19,10 @@ const handleSubmit = () => {
 }
   return (
     <div className="messageContainer">
-    <form action={messageUrl} method="post" onSubmit={handleSubmit}>
-      <input type="hidden" name="MessageId" value={ulid()}/>
+    <form action={messageUrl} method="post" onSubmit={handleSubmit} className="message4">
+      <input type="hidden" name="MessageId" value={ulid()} className="message1"/>
       <label>送る人</label>
-      <select name="ToUserId">
+      <select name="ToUserId" className="message2">
       {users.map((user)=>(
         <option key={user.UserId} value={user.UserId}>{user.Name}</option>
       ))}
@@ -30,7 +30,7 @@ const handleSubmit = () => {
       <input type="hidden" value={logUserId} name="FromUserId"></input>
       <br></br>
       <label>送るポイント</label>
-      <input type="number" name="MessagePoint"placeholder="Point" min="1" max="100" required/>
+      <input type="number" name="MessagePoint"placeholder="Point" min="1" max="100" required className="message3"/>
       <br/>
         <textarea name="MessageText" required></textarea>
         <br></br>

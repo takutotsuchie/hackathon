@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { User } from '../types/type';
 import BasicMenu from './menu';
+import PersonIcon from '@mui/icons-material/Person';
+import { Button } from '@mui/material';
 
 const Header = () => {
     const URL = "https://hackathon2-ypancna7sq-uc.a.run.app"
@@ -22,8 +24,7 @@ const Header = () => {
     <div className="menu">
     <BasicMenu/>
     </div>
-    <div className='loginUserName'>ログインしているユーザー: {user.Name}</div>
-    
+    <div className='loginUserName'><div><PersonIcon/>{user.Name}</div></div>
     </div>
   )
 }
