@@ -80,7 +80,6 @@ const SettingPage = () => {
     }else{
       return(
         <>
-        <Button onClick={deleteUser}>ユーザーの削除</Button>
         <Button onClick={toggleButton}>メッセージの削除</Button>
         </>
       )
