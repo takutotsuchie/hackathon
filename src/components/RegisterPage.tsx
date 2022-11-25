@@ -18,7 +18,7 @@ const Register = () => {
       <div className="RegisterForm">
       <label>name:</label><input type="text" name="Name" placeholder="name" required/>
       </div>
-      <input type="hidden" name="USerPoint" value="1000" />
+      <input type="hidden" name="UserPoint" value="1000" />
       <br></br>
       <Button type="submit" onClick={set}>登録</Button>
     </form>
